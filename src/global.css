@@ -1,4 +1,16 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 320px;
+}
+
 body {
+    min-width: 320px;
+    margin: 0;
     color: #fff;
     background: #17181c;
     font-family: sans-serif;
@@ -9,27 +21,52 @@ header {
 }
 
 header h1 {
-    font-size: 40px;
+    font-size: clamp(28px, 4vw, 40px);
     font-weight: 800;
 }
 
 footer {
-    height: 100px;
+    min-height: 100px;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 600px) {
+    header {
+        padding: 10px 16px;
+    }
+
+    footer {
+        padding: 16px;
+    }
+}
+
 footer .copyright {
-    font-size: 14px;
-    color: #333;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
 }
+
 footer .copyright a {
-    color: #444;
+    color: #999;
+    text-decoration: none;
 }
+
 footer .copyright a:hover {
-    color: #555;
+    color: #fff;
 }
-footer .copyright:before {
-    content: '©';
+
+.rsschool-link {
+    display: flex;
+    align-items: center;
+}
+
+.rsschool-logo {
+    display: block;
+    width: 80px;
+    height: auto;
 }

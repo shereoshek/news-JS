@@ -1,8 +1,10 @@
 .news__item {
     display: flex;
     flex-direction: column;
-    margin: 1rem auto;
-    margin-bottom: 1.6%;
+    width: calc(100% - 2rem);
+    max-width: 700px;
+    min-width: 0;
+    margin: 1rem auto 1.6%;
     background: #fff;
     color: #333;
     line-height: 1.4;
@@ -17,15 +19,12 @@
 
 .news__item .news__meta {
     position: relative;
-    height: 200px;
+    min-height: 200px;
 }
 
 .news__item .news__meta-photo {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     background-size: cover;
     background-position: center;
     transition: transform 0.2s;
@@ -53,6 +52,7 @@
 }
 
 .news__item .news__description {
+    min-width: 0;
     padding: 1rem;
     background: #fff;
     position: relative;
@@ -60,9 +60,10 @@
 }
 
 .news__item .news__description h2 {
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
     font-size: 1.7rem;
+    overflow-wrap: anywhere;
 }
 
 .news__item .news__description h3 {
@@ -71,6 +72,7 @@
     text-transform: uppercase;
     color: #a2a2a2;
     margin-top: 5px;
+    overflow-wrap: anywhere;
 }
 
 .news__item .news__description .news__read-more {
@@ -102,6 +104,7 @@
 
 .news__item p {
     margin: 1rem 0 0;
+    overflow-wrap: anywhere;
 }
 
 .news__item p:first-of-type {
@@ -126,20 +129,17 @@
 @media (min-width: 640px) {
     .news__item {
         flex-direction: row;
-        max-width: 700px;
     }
 
     .news__item .news__meta {
-        flex-basis: 40%;
-        height: auto;
+        flex: 0 0 40%;
     }
 
     .news__item .news__description {
-        flex-basis: 60%;
+        flex: 0 0 60%;
     }
 
     .news__item .news__description:before {
-        -webkit-transform: skewX(-3deg);
         transform: skewX(-3deg);
         content: '';
         background: #fff;
@@ -158,11 +158,20 @@
     .news__item.alt .news__description:before {
         left: inherit;
         right: -10px;
-        -webkit-transform: skew(3deg);
         transform: skew(3deg);
     }
 
     .news__item.alt .news__meta-details {
         padding-left: 25px;
+    }
+}
+
+@media (max-width: 400px) {
+    .news__item .news__description {
+        padding: 0.85rem;
+    }
+
+    .news__item .news__description h2 {
+        font-size: 1.4rem;
     }
 }
