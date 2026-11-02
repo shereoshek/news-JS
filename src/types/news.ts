@@ -1,3 +1,13 @@
+export enum NewsCategory {
+    Business = 'business',
+    Entertainment = 'entertainment',
+    General = 'general',
+    Health = 'health',
+    Science = 'science',
+    Sports = 'sports',
+    Technology = 'technology',
+}
+
 export interface ArticleSource {
     id: string | null;
     name: string;
@@ -25,7 +35,7 @@ export interface NewsSource {
     name: string;
     description: string;
     url: string;
-    category: string;
+    category: NewsCategory;
     language: string;
     country: string;
 }

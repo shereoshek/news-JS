@@ -1,29 +1,43 @@
+type QueryOptions = Record<string, string | number | boolean | undefined>;
+
+interface RequestOptions {
+    endpoint: string;
+    options?: QueryOptions;
+}
+
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
 class Loader {
-    constructor(baseLink, options) {
+    baseLink: string;
+    options: QueryOptions;
+
+    constructor(baseLink: string, options: QueryOptions) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
-    getResp(
-        { endpoint, options = {} },
-        callback = () => {
+    getResp<T>(
+        { endpoint, options = {} }: RequestOptions,
+        callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
-    ) {
-        this.load('GET', endpoint, callback, options);
+    ): void {
+        this.load<T>('GET', endpoint, callback, options);
     }
 
-    errorHandler(res) {
+    errorHandler(res: Response): Response {
         if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
+            if (res.status === 401 || res.status === 404) {
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+            }
+
             throw Error(res.statusText);
         }
 
         return res;
     }
 
-    makeUrl(options, endpoint) {
+    makeUrl(options: QueryOptions, endpoint: string): string {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
@@ -34,12 +48,12 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    load(method, endpoint, callback, options = {}) {
+    load<T>(method: HttpMethod, endpoint: string, callback: (data: T) => void, options: QueryOptions = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
-            .then(this.errorHandler)
-            .then((res) => res.json())
+            .then((res) => this.errorHandler(res))
+            .then((res) => res.json() as Promise<T>)
             .then((data) => callback(data))
-            .catch((err) => console.error(err));
+            .catch((err: Error) => console.error(err));
     }
 }
 
