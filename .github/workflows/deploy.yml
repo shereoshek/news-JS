@@ -28,11 +28,9 @@ jobs:
 
             - name: Create environment file
               env:
-                  API_URL: ${{ secrets.API_URL }}
-                  API_KEY: ${{ secrets.API_KEY }}
+                API_URL: ${{ secrets.API_URL }}
               run: |
                   printf 'API_URL=%s\n' "$API_URL" > .env
-                  printf 'API_KEY=%s\n' "$API_KEY" >> .env
 
             - name: Build application
               run: npm run build
